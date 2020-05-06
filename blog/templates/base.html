@@ -6,12 +6,38 @@
     <title>Django blog</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400">
     <link rel="stylesheet" href="{% static '/css/base.css' %}">
+    <style>
+        .cancel {
+            border: 1px solid black;
+            padding: 1px 5px;
+            margin: 10px;
+            display: inline-block;
+            text-decoration: none;
+            color: black;
+            color: #A52D26;
+            box-shadow: 0 0 2px 1px #BDBDBD;
+            background: linear-gradient(180deg, #FCFFE6 50%, #E6E6E6 100%);
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1><a href="{% url 'home' %}">Django blog</a></h1>
-    </header>
     <div>
+        <header>
+            <div class="nav-left">
+                <h1><a href="{% url 'home' %}">Django blog</a></h1>
+            </div>
+            <div class="nav-right">
+                <a href="{% url 'post_new' %}">+ New Blog Post</a>
+            </div>
+        </header>
+        {% if user.is_authenticated %}
+            <p>Hi {{ user.username }}</p>
+            <p><a href="{% url 'logout' %}">Log out</a></p>
+        {% else %}
+            <p>You are not logged in.</p>
+            <p><a href="{% url 'login' %}">Log in</a></p>
+            <p><a href="{% url 'signup' %}">Sign up</a></p>
+        {% endif %}
         {% block content %}
         {% endblock %}
     </div>
